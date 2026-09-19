@@ -1,0 +1,13 @@
+{
+  "app": "inventory-app",
+  "command": "node server/index.js",
+  "build": {
+    "command": "npm run build"
+  },
+  "disks": [
+    {
+      "name": "data",
+      "mountTo": "/persistent"
+    }
+  ]
+}

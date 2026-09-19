@@ -1,0 +1,12 @@
+node_modules
+data
+.env
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+.git
+*.bat
+README.md
+LIARA_DEPLOY.md
+src
+tsconfig.json
