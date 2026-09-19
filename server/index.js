@@ -2,6 +2,7 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import config from './config.js';
 import { runMigrations, seedData } from './db.js';
@@ -41,14 +42,21 @@ app.use(analyticsRoutes);
 
 // Serve static frontend files
 const distPath = path.join(__dirname, '..', 'dist');
-app.use(express.static(distPath));
 
-// SPA fallback - serve index.html for all non-API routes
-app.get('*', (req, res) => {
-  if (!req.path.startsWith('/api/')) {
-    res.sendFile(path.join(distPath, 'index.html'));
-  }
-});
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath));
+
+  // SPA fallback - serve index.html for all non-API routes
+  app.get('*', (req, res) => {
+    if (!req.path.startsWith('/api/')) {
+      res.sendFile(path.join(distPath, 'index.html'));
+    }
+  });
+} else {
+  app.get('/', (req, res) => {
+    res.status(503).send('Frontend not built. Run: npm run build');
+  });
+}
 
 // Error handler
 app.use(errorHandler);
