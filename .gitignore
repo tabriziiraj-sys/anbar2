@@ -1,0 +1,11 @@
+node_modules/
+data/
+.env
+dist/
+drizzle/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+.next/
+build/
+*.log
